@@ -1,0 +1,7 @@
+{
+  "name": "Space-Time Unlock",
+  "description": "A gamified routine builder that unlocks space and time through location-based missions.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Space-Time Unlock</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS without integrity check to avoid loading issues -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <style>
+      /* Fix for 1px lines between tiles (Grid artifact fix) */
+      .leaflet-tile-container img {
+        outline: 1px solid transparent;
+      }
+      /* Ensure map container always fills space */
+      .leaflet-container {
+        height: 100%;
+        width: 100%;
+        background: #0f172a; /* Match slate-900 */
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-leaflet": "https://aistudiocdn.com/react-leaflet@^5.0.0",
+    "leaflet/": "https://aistudiocdn.com/leaflet@^1.9.4/",
+    "leaflet": "https://aistudiocdn.com/leaflet@^1.9.4",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body class="bg-slate-950 text-slate-100 antialiased overflow-hidden">
+    <div id="root"></div>
+  </body>
+</html>
