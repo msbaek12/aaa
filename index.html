@@ -36,5 +36,7 @@
 </head>
   <body class="bg-slate-950 text-slate-100 antialiased overflow-hidden">
     <div id="root"></div>
+    <!-- CRITICAL FIX: Entry point script needed for Vercel/Vite build -->
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

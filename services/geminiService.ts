@@ -1,9 +1,32 @@
 import { GoogleGenAI } from "@google/genai";
 import { MissionLevel } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Helper function to safely get API Key in various environments (Vercel, Vite, CRA)
+const getApiKey = () => {
+  // 1. Try Vite env (Vercel usually uses this with Vite preset)
+  // @ts-ignore
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
+    // @ts-ignore
+    return import.meta.env.VITE_GEMINI_API_KEY;
+  }
+  
+  // 2. Try Standard Process Env (CRA or Node)
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.REACT_APP_GEMINI_API_KEY) return process.env.REACT_APP_GEMINI_API_KEY;
+    if (process.env.VITE_GEMINI_API_KEY) return process.env.VITE_GEMINI_API_KEY;
+    if (process.env.API_KEY) return process.env.API_KEY;
+  }
+
+  return "";
+};
+
+const apiKey = getApiKey();
+// Initialize AI conditionally to prevent crash on boot if key is missing
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const getMissionBriefing = async (level: MissionLevel, weather: string) => {
+  if (!ai) return "API 키가 설정되지 않았습니다. (Vercel 환경변수를 확인하세요)";
+  
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -25,6 +48,8 @@ export const getMissionBriefing = async (level: MissionLevel, weather: string) =
 };
 
 export const getPanicSupport = async () => {
+  if (!ai) return "호흡을 가다듬으세요. 설정에서 API 키를 확인해주세요.";
+
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -38,6 +63,8 @@ export const getPanicSupport = async () => {
 };
 
 export const getMissionSuccessMessage = async (level: MissionLevel) => {
+  if (!ai) return "미션 완료! (AI 응답 불가: 키 미설정)";
+
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
